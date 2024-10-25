@@ -1,60 +1,89 @@
 <p align="center">
-  <img src="https://res.cloudinary.com/meilisearch/image/upload/v1587402338/SDKs/meilisearch_php.svg" alt="Meilisearch-PHP" width="200" height="200" />
+  <img src="https://raw.githubusercontent.com/meilisearch/integration-guides/main/assets/logos/meilisearch_php.svg" alt="Meilisearch-PHP" width="200" height="200" />
 </p>
 
 <h1 align="center">Meilisearch PHP</h1>
 
 <h4 align="center">
   <a href="https://github.com/meilisearch/meilisearch">Meilisearch</a> |
+  <a href="https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=github&utm_medium=meilisearch-php">Meilisearch Cloud</a> |
+  <a href="https://www.meilisearch.com/docs">Documentation</a> |
+  <a href="https://discord.meilisearch.com">Discord</a> |
+  <a href="https://roadmap.meilisearch.com/tabs/1-under-consideration">Roadmap</a> |
   <a href="https://www.meilisearch.com">Website</a> |
-  <a href="https://blog.meilisearch.com">Blog</a> |
-  <a href="https://twitter.com/meilisearch">Twitter</a> |
-  <a href="https://docs.meilisearch.com">Documentation</a> |
-  <a href="https://docs.meilisearch.com/faq">FAQ</a>
+  <a href="https://www.meilisearch.com/docs/faq">FAQ</a>
 </h4>
 
 <p align="center">
+  <a href="https://codecov.io/gh/meilisearch/meilisearch-php/branch/main"><img src="https://codecov.io/gh/meilisearch/meilisearch-php/branch/main/graph/badge.svg" alt="Codecov coverage"></a>
   <a href="https://packagist.org/packages/meilisearch/meilisearch-php"><img src="https://img.shields.io/packagist/v/meilisearch/meilisearch-php" alt="Latest Stable Version"></a>
   <a href="https://github.com/meilisearch/meilisearch-php/actions"><img src="https://github.com/meilisearch/meilisearch-php/workflows/Tests/badge.svg" alt="Test"></a>
-  <a href="https://github.com/meilisearch/meilisearch-php/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-informational" alt="License"></a>
-  <a href="https://slack.meilisearch.com"><img src="https://img.shields.io/badge/slack-MeiliSearch-blue.svg?logo=slack" alt="Slack"></a>
+  <a href="https://github.com/meilisearch/meilisearch-php/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-informational" alt="License"></a>
+  <a href="https://ms-bors.herokuapp.com/repositories/59"><img src="https://bors.tech/images/badge_small.svg" alt="Bors enabled"></a>
 </p>
 
-<p align="center">⚡ Lightning Fast, Ultra Relevant, and Typo-Tolerant Search Engine Meilisearch client written in PHP</p>
+<p align="center">⚡ The Meilisearch API client written for PHP 🐘</p>
 
-**Meilisearch PHP** is a client for **Meilisearch** written in PHP. **Meilisearch** is a powerful, fast, open-source, easy to use and deploy search engine. Both searching and indexing are highly customizable. Features such as typo-tolerance, filters, and synonyms are provided out-of-the-box.
+**Meilisearch PHP** is the Meilisearch API client for PHP developers.
 
-## Table of Contents <!-- omit in toc -->
+**Meilisearch** is an open-source search engine. [Learn more about Meilisearch.](https://github.com/meilisearch/Meilisearch)
 
+## Table of Contents <!-- omit in TOC -->
+
+- [📖 Documentation](#-documentation)
+- [⚡ Supercharge your Meilisearch experience](#-supercharge-your-meilisearch-experience)
 - [🔧 Installation](#-installation)
 - [🚀 Getting started](#-getting-started)
 - [🤖 Compatibility with Meilisearch](#-compatibility-with-meilisearch)
-- [🎬 Examples](#-examples)
-  - [Indexes](#indexes)
-  - [Documents](#documents)
-  - [Update status](#update-status)
-  - [Search](#search)
-- [🧰 Replace HTTP client](#-replace-http-client)
-- [⚙️ Development Workflow and Contributing](#️-development-workflow-and-contributing)
+- [💡 Learn more](#-learn-more)
+- [🧰 HTTP Client Compatibilities](#-http-client-compatibilities)
+  - [Customize your HTTP Client](#customize-your-http-client)
+- [⚙️ Contributing](#️-contributing)
+
+## 📖 Documentation
+
+
+To learn more about Meilisearch PHP, refer to the in-depth [Meilisearch PHP Documentation](https://php-sdk.meilisearch.com). To learn more about Meilisearch in general, refer to our [documentation](https://www.meilisearch.com/docs/learn/getting_started/quick_start) or our [API reference](https://www.meilisearch.com/docs/reference/api/overview).
+
+## ⚡ Supercharge your Meilisearch experience
+
+Say goodbye to server deployment and manual updates with [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=github&utm_medium=meilisearch-php). Get started with a 14-day free trial! No credit card required.
 
 ## 🔧 Installation
 
-With composer:
+To get started, simply require the project using [Composer](https://getcomposer.org/).<br>
+You will also need to install packages that "provide" [`psr/http-client-implementation`](https://packagist.org/providers/psr/http-client-implementation) and [`psr/http-factory-implementation`](https://packagist.org/providers/psr/http-factory-implementation).<br>
+A list with compatible HTTP clients and client adapters can be found at [php-http.org](http://docs.php-http.org/en/latest/clients.html).
+
+**If you don't know which HTTP client to use, we recommend using Guzzle 7**:
 
 ```bash
-$ composer require meilisearch/meilisearch-php
+composer require meilisearch/meilisearch-php guzzlehttp/guzzle http-interop/http-factory-guzzle:^1.0
 ```
+
+Here is an example of installation with the `symfony/http-client`:
+
+```bash
+composer require meilisearch/meilisearch-php symfony/http-client nyholm/psr7:^1.0
+```
+
+💡 *More HTTP client installations compatible with this package can be found [in this section](#-http-client-compatibilities).*
 
 ### Run Meilisearch <!-- omit in toc -->
 
-There are many easy ways to [download and run a Meilisearch instance](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch).
+There are many easy ways to [download and run a Meilisearch instance](https://www.meilisearch.com/docs/learn/getting_started/installation).
 
-For example, if you use Docker:
-```bash
-$ docker run -it --rm -p 7700:7700 getmeili/meilisearch:latest ./meilisearch --master-key=masterKey
+For example, using the `curl` command in your [Terminal](https://itconnect.uw.edu/learn/workshops/online-tutorials/web-publishing/what-is-a-terminal/):
+
+```sh
+#Install Meilisearch
+curl -L https://install.meilisearch.com | sh
+
+# Launch Meilisearch
+./meilisearch --master-key=masterKey
 ```
 
-NB: you can also download Meilisearch from **Homebrew** or **APT**.
+NB: you can also download Meilisearch from **Homebrew** or **APT** or even run it using **Docker**.
 
 ## 🚀 Getting started
 
@@ -65,241 +94,195 @@ NB: you can also download Meilisearch from **Homebrew** or **APT**.
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use MeiliSearch\Client;
+use Meilisearch\Client;
 
 $client = new Client('http://127.0.0.1:7700', 'masterKey');
-$index = $client->createIndex('books'); // If your index does not exist
-$index = $client->getIndex('books');    // If you already created your index
+
+# An index is where the documents are stored.
+$index = $client->index('movies');
 
 $documents = [
-    ['book_id' => 123,  'title' => 'Pride and Prejudice', 'author' => 'Jane Austen'],
-    ['book_id' => 456,  'title' => 'Le Petit Prince', 'author' => 'Antoine de Saint-Exupéry'],
-    ['book_id' => 1,    'title' => 'Alice In Wonderland', 'author' => 'Lewis Carroll'],
-    ['book_id' => 1344, 'title' => 'The Hobbit', 'author' => 'J. R. R. Tolkien'],
-    ['book_id' => 4,    'title' => 'Harry Potter and the Half-Blood Prince', 'author' => 'J. K. Rowling'],
-    ['book_id' => 42,   'title' => 'The Hitchhiker\'s Guide to the Galaxy', 'author' => 'Douglas Adams, Eoin Colfer, Thomas Tidholm'],
+    ['id' => 1,  'title' => 'Carol', 'genres' => ['Romance, Drama']],
+    ['id' => 2,  'title' => 'Wonder Woman', 'genres' => ['Action, Adventure']],
+    ['id' => 3,  'title' => 'Life of Pi', 'genres' => ['Adventure, Drama']],
+    ['id' => 4,  'title' => 'Mad Max: Fury Road', 'genres' => ['Adventure, Science Fiction']],
+    ['id' => 5,  'title' => 'Moana', 'genres' => ['Fantasy, Action']],
+    ['id' => 6,  'title' => 'Philadelphia', 'genres' => ['Drama']],
 ];
 
-$index->addDocuments($documents); // => { "updateId": 0 }
+# If the index 'movies' does not exist, Meilisearch creates it when you first add the documents.
+$index->addDocuments($documents); // => { "uid": 0 }
 ```
 
-With the `updateId`, you can check the status (`processed` or `failed`) of your documents addition thanks to this [method](#update-status).
+With the `uid`, you can check the status (`enqueued`, `canceled`, `processing`, `succeeded` or `failed`) of your documents addition using the [task](https://www.meilisearch.com/docs/reference/api/tasks#status).
 
-
-#### Search in index <!-- omit in toc -->
+#### Basic Search <!-- omit in toc -->
 
 ```php
 // Meilisearch is typo-tolerant:
-print_r($index->search('harry pottre'));
+$hits = $index->search('wondre woman')->getHits();
+print_r($hits);
 ```
+
 Output:
+
 ```php
 Array
 (
-    [hits] => Array
+    [0] => Array
         (
-            [0] => Array
+            [id] => 2
+            [title] => Wonder Woman
+            [genres] => Array
                 (
-                    [id] => 4
-                    [title] => Harry Potter and the Half-Blood Prince
+                     [0] => Action, Adventure
                 )
-
         )
-
-    [offset] => 0
-    [limit] => 20
-    [processingTimeMs] => 1
-    [query] => harry pottre
 )
 ```
 
-## 🤖 Compatibility with Meilisearch
+#### Custom Search <!-- omit in toc -->
 
-This package is compatible with the following Meilisearch versions:
-- `v0.12.X`
-- `v0.11.X`
+All the supported options are described in the [search parameters](https://www.meilisearch.com/docs/reference/api/search#search-parameters) section of the documentation.
 
-## 🎬 Examples
-
-All HTTP routes of Meilisearch are accessible via methods in this SDK.</br>
-You can check out [the API documentation](https://docs.meilisearch.com/references/).
-
-### Indexes
-
-#### Create an index <!-- omit in toc -->
+💡 **More about the `search()` method in [the Wiki](https://github.com/meilisearch/meilisearch-php/wiki/Search).**
 
 ```php
-// Create an index
-$index = $client->createIndex('books');
-// Create an index and give the primary-key
-$index = $client->createIndex(
-    'books',
-    ['primaryKey' => 'book_id']
-);
+$index->search(
+    'phil',
+    [
+        'attributesToHighlight' => ['*'],
+    ]
+)->getRaw(); // Return in Array format
 ```
 
-#### Get an index or create it if it doesn't exist <!-- omit in toc -->
-```php
-// Get or create an index
-$index = $client->getOrCreateIndex('books');
-// Get or create an index and give the primary-key
-$index = $client->getOrCreateIndex(
-    'books',
-    ['primaryKey' => 'book_id']
-);
-```
-
-#### Get an index or create it if it doesn't exist <!-- omit in toc -->
-```php
-// Get or create an index
-$index = $client->getOrCreateIndex('books');
-// Get or create an index and give the primary-key
-$index = $client->getOrCreateIndex(
-    'books',
-    ['primaryKey' => 'book_id']
-);
-```
-
-#### List all indexes <!-- omit in toc -->
-
-```php
-$client->getAllIndexes();
-```
-
-#### Get an index object <!-- omit in toc -->
-
-```php
-$client->getIndex('books');
-```
-
-### Documents
-
-#### Fetch documents <!-- omit in toc -->
-
-```php
-// Get one document
-$index->getDocument(123);
-// Get documents by batch
-$index->getDocuments(['offset' => 10 , 'limit' => 20]);
-```
-
-#### Add documents <!-- omit in toc -->
-
-```php
-$index->addDocuments([['book_id' => 2, 'title' => 'Madame Bovary']])
-```
-
-Response:
-```json
-{
-    "updateId": 1
-}
-```
-With this `updateId` you can track your [operation update](#update-status).
-
-#### Delete documents <!-- omit in toc -->
-
-```php
-// Delete one document
-$index->deleteDocument(2);
-// Delete several documents
-$index->deleteDocuments([1, 42]);
-// Delete all documents /!\
-$index->deleteAllDocuments();
-```
-
-### Update status
-
-```php
-// Get one update status
-// Parameter: the updateId got after an asynchronous request (e.g. documents addition)
-$index->getUpdateStatus(1);
-// Get all update satus
-$index->getAllUpdateStatus();
-```
-
-### Search
-
-#### Basic search <!-- omit in toc -->
-
-```php
-$index->search('prince');
-```
+JSON output:
 
 ```json
 {
     "hits": [
         {
-            "book_id": 456,
-            "title": "Le Petit Prince"
-        },
-        {
-            "book_id": 4,
-            "title": "Harry Potter and the Half-Blood Prince"
+            "id": 6,
+            "title": "Philadelphia",
+            "genre": ["Drama"],
+            "_formatted": {
+                "id": 6,
+                "title": "<em>Phil</em>adelphia",
+                "genre": ["Drama"]
+            }
         }
     ],
     "offset": 0,
     "limit": 20,
-    "processingTimeMs": 13,
-    "query": "prince"
+    "processingTimeMs": 0,
+    "query": "phil"
 }
 ```
+#### Custom Search With Filters <!-- omit in toc -->
 
-#### Custom search <!-- omit in toc -->
-
-All the supported options are described in [this documentation section](https://docs.meilisearch.com/references/search.html#search-in-an-index).
+If you want to enable filtering, you must add your attributes to the `filterableAttributes` index setting.
 
 ```php
-$index->search('prince', ['limit' => 1]);
+$index->updateFilterableAttributes([
+  'id',
+  'genres'
+]);
+```
+
+You only need to perform this operation once.
+
+Note that Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take time. You can track the process using the [tasks](https://www.meilisearch.com/docs/reference/api/tasks#get-tasks)).
+
+Then, you can perform the search:
+
+```php
+$index->search(
+  'wonder',
+  [
+    'filter' => ['id > 1 AND genres = Action']
+  ]
+);
 ```
 
 ```json
 {
-    "hits": [
-        {
-            "book_id": 456,
-            "title": "Le Petit Prince"
-        }
-    ],
-    "offset": 0,
-    "limit": 1,
-    "processingTimeMs": 10,
-    "query": "prince"
+  "hits": [
+    {
+      "id": 2,
+      "title": "Wonder Woman",
+      "genres": ["Action","Adventure"]
+    }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "estimatedTotalHits": 1,
+  "processingTimeMs": 0,
+  "query": "wonder"
 }
 ```
 
-With limit and filter, both single and double quotes are supported.
-```php
-// Enclosing with double quotes
-$index->search('prince', ['limit' => 2, 'filters' => "title = 'Le Petit Prince' OR author = 'J. R. R. Tolkien'"]);
+## 🤖 Compatibility with Meilisearch
 
-// Enclosing with single quotes
-$index->search('hobbit', ['limit' => 2, 'filters' => 'title = "The Hitchhiker\'s Guide to the Galaxy" OR author = "J. R. R. Tolkien"']);
-```
+This package guarantees compatibility with [version v1.x of Meilisearch](https://github.com/meilisearch/meilisearch/releases/latest), but some features may not be present. Please check the [issues](https://github.com/meilisearch/meilisearch-php/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22+label%3Aenhancement) for more info.
 
-## 🧰 Replace HTTP client
+## 💡 Learn more
 
-By default [Guzzle](http://docs.guzzlephp.org/en/6.5/) is used for all HTTP requests.<br>
-But you can replace the used HTTP client with any [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible client.<br>
-A list with compatible HTTP clients and client adapters can be found at [php-http.org](http://docs.php-http.org/en/latest/clients.html).
+The following sections in our main documentation website may interest you:
 
-For example, if you want to use the [Symfony HttpClient](https://symfony.com/doc/current/components/http_client.html),
-use the following code:
+- **Manipulate documents**: see the [API references](https://www.meilisearch.com/docs/reference/api/documents) or read more about [documents](https://www.meilisearch.com/docs/learn/core_concepts/documents).
+- **Search**: see the [API references](https://www.meilisearch.com/docs/reference/api/search) or follow our guide on [search parameters](https://www.meilisearch.com/docs/reference/api/search#search-parameters).
+- **Manage the indexes**: see the [API references](https://www.meilisearch.com/docs/reference/api/indexes) or read more about [indexes](https://www.meilisearch.com/docs/learn/core_concepts/indexes).
+- **Configure the index settings**: see the [API references](https://www.meilisearch.com/docs/reference/api/settings) or follow our guide on [settings parameters](https://www.meilisearch.com/docs/learn/configuration/settings).
+
+## 🧰 HTTP Client Compatibilities
+
+You could use any [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible client to use with this SDK. No additional configurations are required.<br>
+A list of compatible HTTP clients and client adapters can be found at [php-http.org](http://docs.php-http.org/en/latest/clients.html).
+
+If you want to use this `meilisearch-php`:
+
+- with `guzzlehttp/guzzle` (Guzzle 7), run:
 
 ```bash
-$ composer require symfony/http-client
-$ composer require nyholm/psr7
+composer require meilisearch/meilisearch-php guzzlehttp/guzzle http-interop/http-factory-guzzle:^1.0
 ```
+
+- with `php-http/guzzle6-adapter` (Guzzle < 7), run:
+
+```bash
+composer require meilisearch/meilisearch-php php-http/guzzle6-adapter:^2.0 http-interop/http-factory-guzzle:^1.0
+```
+
+- with `symfony/http-client`, run:
+
+```bash
+composer require meilisearch/meilisearch-php symfony/http-client nyholm/psr7:^1.0
+```
+
+- with `php-http/curl-client`, run:
+
+```bash
+composer require meilisearch/meilisearch-php php-http/curl-client nyholm/psr7:^1.0
+```
+
+- with `kriswallsmith/buzz`, run:
+
+```bash
+composer require meilisearch/meilisearch-php kriswallsmith/buzz nyholm/psr7:^1.0
+```
+
+### Customize your HTTP Client
+
+For some reason, you might want to pass a custom configuration to your own HTTP client.<br>
+Make sure you have a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible client when you initialize the Meilisearch client.
+
+Following the example in the [Getting started](#-getting-started) section, with the Guzzle HTTP client:
 
 ```php
-use Symfony\Component\HttpClient\HttplugClient;
-use MeiliSearch\Client;
-
-$httpClient = new HttplugClient();
-$client = new Client('http://127.0.0.1:7700', 'masterKey', $httpClient);
+new Client('http://127.0.0.1:7700', 'masterKey', new GuzzleHttpClient(['timeout' => 2]));
 ```
 
-## ⚙️ Development Workflow and Contributing
+## ⚙️ Contributing
 
 Any new contribution is more than welcome in this project!
 

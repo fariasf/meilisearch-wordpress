@@ -1,5 +1,10 @@
 {
     "require": {
-        "meilisearch/meilisearch-php": "^0.12.0"
+        "meilisearch/meilisearch-php": "1.10.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }

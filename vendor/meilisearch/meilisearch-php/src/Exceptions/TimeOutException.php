@@ -1,27 +1,26 @@
 <?php
 
-namespace MeiliSearch\Exceptions;
+declare(strict_types=1);
 
-class TimeOutException extends \Exception
+namespace Meilisearch\Exceptions;
+
+class TimeOutException extends \Exception implements ExceptionInterface
 {
-    public $code = 408;
-    public $message = 'Request timed out';
+    public $code;
+    public $message;
 
-    public function __construct($message = null, $code = null, $previous = null)
+    public function __construct(?string $message = null, ?int $code = null, ?\Throwable $previous = null)
     {
-        if (isset($message)) {
-            $this->message = $message;
-        }
-        if (isset($code)) {
-            $this->code = $code;
-        }
+        $this->message = $message ?? 'Request timed out';
+        $this->code = $code ?? 408;
+
         parent::__construct($this->message, $this->code, $previous);
     }
 
     public function __toString()
     {
-        $base = 'MeiliSearch TimeOutException: Code: '.$this->code;
-        if (isset($this->message)) {
+        $base = 'Meilisearch TimeOutException: Code: '.$this->code;
+        if ($this->message) {
             return $base.' - Message: '.$this->message;
         } else {
             return $base;

@@ -1,8 +1,10 @@
 <?php
 
-namespace MeiliSearch\Endpoints;
+declare(strict_types=1);
 
-use MeiliSearch\Contracts\Endpoint;
+namespace Meilisearch\Endpoints;
+
+use Meilisearch\Contracts\Endpoint;
 
 class Stats extends Endpoint
 {

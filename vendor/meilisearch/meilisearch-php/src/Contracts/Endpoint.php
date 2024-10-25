@@ -1,17 +1,19 @@
 <?php
 
-namespace MeiliSearch\Contracts;
+declare(strict_types=1);
+
+namespace Meilisearch\Contracts;
 
 abstract class Endpoint
 {
-    /**
-     * @var Http
-     */
-    protected $http;
+    protected const PATH = '';
+    protected Http $http;
+    protected ?string $apiKey;
 
-    public function __construct(Http $http)
+    public function __construct(Http $http, ?string $apiKey = null)
     {
         $this->http = $http;
+        $this->apiKey = $apiKey;
     }
 
     public function show(): ?array
