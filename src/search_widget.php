@@ -76,9 +76,8 @@ class MeiliSearch_Widget extends WP_Widget {
                 // echo '<form><input type="text" placeholder="' . $text . '"/></form>';
                 echo '<div id="'.$search_elt_id.'" class="ais-SearchBox"></div>';
                 echo '<div id="'.$hits_elt_id.'" class="ais-SearchBox"></div>';
-                echo '<script src="'.'https://cdn.jsdelivr.net/npm/meilisearch/dist/bundles/meilisearch.browser.js'.'"></script>';
-                echo '<script src="'.'https://cdn.jsdelivr.net/npm/instantsearch.js@4'.'"></script>';
-                echo '<script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch"></script>';
+                echo '<script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>';
+                echo '<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>';
                 echo '<script src="'.plugin_dir_url( __FILE__ ) . 'js/instant-meilisearch.js'.'"></script>';
                 echo '<script>';
 

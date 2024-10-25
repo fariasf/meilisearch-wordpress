@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@meilisearch/instant-meilisearch": "^0.2.5"
+    "@meilisearch/instant-meilisearch": "0.21.1"
   }
 }

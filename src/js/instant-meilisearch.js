@@ -9,7 +9,7 @@ function wpInstantMeilisearch(searchUrl, meilisearchPublicKey, indexName, search
             {
                 paginationTotalHits: 5,
             }
-        )
+        ).searchClient
     });
 
     search.addWidgets([
