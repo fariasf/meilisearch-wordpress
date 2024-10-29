@@ -34,13 +34,20 @@ function delete_post_from_index($post_id){
     $index->deleteDocument($post_id);
 }
 
-function index_all_posts($sync = false){
+function index_all_posts( $sync = false ){
+    $post_types = get_post_types_by_support( 'meilisearch' );
+    foreach ( $post_types as $post_type ) {
+        index_all_posts_of_type( $post_type, $sync );
+    }
+}
+
+function index_all_posts_of_type( $post_type, $sync = false ) {
     $index     = get_meilisearch_index();
     $documents = [];
     $posts     = get_posts(
         array(
             'numberposts' => -1,
-            'post_type'   => get_post_types_by_support( 'meilisearch' )
+            'post_type'   => $post_type,
         )
     );
     foreach ( $posts as $post ){
@@ -91,6 +98,7 @@ function post_to_document( $post ) {
             'url'        => get_the_permalink( $post ),
             'tags'       => $post->tags_input,
             'categories' => $categories,
+            'type'       => $post->post_type,
     ];
     return $document;
 }

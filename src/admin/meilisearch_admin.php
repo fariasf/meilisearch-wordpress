@@ -52,15 +52,19 @@ class MeiliSearch {
 
     public function meilisearch_create_admin_page_index_content() {
 
-        if (isset($_GET['indexAll']) && $_GET['indexAll'] == 1) {
-            index_all_posts($sync=true);
+        if ( isset( $_GET['indexAll'] ) && $_GET['indexAll'] == 1 ) {
+            index_all_posts( true );
+        }
+        if ( isset( $_GET['indexType'] ) && post_type_supports( $_GET['indexType'], 'meilisearch' ) ) {
+            index_all_posts_of_type( $_GET['indexType'], true );
         }
         if (isset($_GET['deleteIndex']) && $_GET['deleteIndex'] == 1) {
             delete_index();
         }
 
-        $this->meilisearch_options = get_option( 'meilisearch_option_name' ); ?>
-
+        $this->meilisearch_options = get_option( 'meilisearch_option_name' );
+        $supported_post_types      = get_post_types_by_support( 'meilisearch' );
+        ?>
         <div class="wrap">
             <h2>Index your existing content to Meilisearch</h2>
             <p>In this page you can index all of your currently existing content in your Wordpress site</p>
@@ -78,6 +82,13 @@ class MeiliSearch {
                     <input id="delete-index" type="submit" value="Index my site content" class="button" >
                 </span>
             </form>
+            <?php foreach( $supported_post_types as $post_type ): ?>
+                <form method="post" action="admin.php?page=meilisearch_index_content&indexType=<?php echo $post_type; ?>">
+                    <span id="index-<?php echo $post_type; ?>-button">
+                        <input id="index-<?php echo $post_type; ?>" type="submit" value="Index <?php echo $post_type; ?>" class="button" >
+                    </span>
+                </form>
+            <?php endforeach; ?>
         </div>
     <?php }
 
