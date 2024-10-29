@@ -34,15 +34,15 @@ function delete_post_from_index($post_id){
     $index->deleteDocument($post_id);
 }
 
-
-function meilisearch_wordpress_activate(){
-
-}
-
 function index_all_posts($sync = false){
     $index     = get_meilisearch_index();
     $documents = [];
-    $posts     = get_posts( array( 'numberposts' => -1 ) );
+    $posts     = get_posts(
+        array(
+            'numberposts' => -1,
+            'post_type'   => get_post_types_by_support( 'meilisearch' )
+        )
+    );
     foreach ( $posts as $post ){
         $document = apply_filters( 'post_to_document', $post );
         if ( $document ) {
