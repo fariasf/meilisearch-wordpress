@@ -4,8 +4,12 @@ use MeiliSearch\Client;
 
 function get_meilisearch_index(){
     $meilisearch_options = get_option( 'meilisearch_option_name' );
-    $client = new Client($meilisearch_options['meilisearch_url_0'], $meilisearch_options['meilisearch_private_key_1']);
-    $index = $client->index($meilisearch_options['meilisearch_index_name']);
+    $client = new Client( $meilisearch_options['meilisearch_url_0'], $meilisearch_options['meilisearch_private_key_1'] );
+    try {
+        $index = $client->index( $meilisearch_options['meilisearch_index_name'] );
+    } catch( Exception $e ) {
+        $index = $client->createIndex( $meilisearch_options['meilisearch_index_name'] );
+    }
     return $index;
 }
 
@@ -60,8 +64,12 @@ function delete_index(){
 
 function count_indexed(){
     $index = get_meilisearch_index();
-    $count = $index->stats();
-    return $count['numberOfDocuments'];
+    try {
+        $count = $index->stats();
+        return $count['numberOfDocuments'];
+    } catch( Exception $e ) {
+        return 0;
+    }
 }
 
 function post_to_document( $post ) {
