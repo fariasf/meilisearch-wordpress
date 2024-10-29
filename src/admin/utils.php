@@ -23,21 +23,7 @@ function index_post_after_meta_update($post, $request){
 
 function index_post($post){
     $index = get_meilisearch_index();
-    $categories = [];
-    foreach ($post->post_category as $category){
-        array_push($categories, get_cat_name($category));
-    }
-    $document = [
-        [
-            'id' => $post->ID,
-            'title' => $post->post_title,
-            'content' => strip_tags($post->post_content),
-            'img' => get_the_post_thumbnail_url($post, array(100,100)),
-            'url' => get_the_permalink($post),
-            'tags' => $post->tags_input,
-            'categories' => $categories,
-        ],
-    ];
+    $document = apply_filters('post_to_document', $post);
     $index->addDocuments($document);
 }
 
@@ -56,20 +42,7 @@ function index_all_posts($sync = false){
     $documents = [];
     $posts = get_posts(array('numberposts' => -1));
     foreach ($posts as $post){
-        // index_post($post);
-        $categories = [];
-        foreach ($post->post_category as $category){
-            array_push($categories, get_cat_name($category));
-        }
-        $document = [
-                'id' => $post->ID,
-                'title' => $post->post_title,
-                'content' => strip_tags($post->post_content),
-                'img' => get_the_post_thumbnail_url($post, array(100,100)),
-                'url' => get_the_permalink($post),
-                'tags' => $post->tags_input,
-                'categories' => $categories,
-        ];
+        $document = apply_filters('post_to_document', $post);
         array_push($documents, $document);
     }
     $update = $index->addDocuments($documents);
@@ -89,4 +62,20 @@ function count_indexed(){
     return $count['numberOfDocuments'];
 }
 
-?>
+function post_to_document( $post ) {
+    $categories = [];
+    foreach ($post->post_category as $category){
+        array_push($categories, get_cat_name($category));
+    }
+    $document = [
+            'id' => $post->ID,
+            'title' => $post->post_title,
+            'content' => strip_tags($post->post_content),
+            'img' => get_the_post_thumbnail_url($post, array(100,100)),
+            'url' => get_the_permalink($post),
+            'tags' => $post->tags_input,
+            'categories' => $categories,
+    ];
+    return $document;
+}
+add_filter( 'post_to_document', 'post_to_document' );
