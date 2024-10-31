@@ -42,26 +42,40 @@ function index_all_posts( $sync = false ){
 }
 
 function index_all_posts_of_type( $post_type, $sync = false ) {
-    $index     = get_meilisearch_index();
-    $documents = [];
-    $posts     = get_posts(
+    $index = get_meilisearch_index();
+
+    $query = new WP_Query(
         array(
-            'numberposts' => -1,
-            'post_type'   => $post_type,
+            'post_type'      => $post_type,
+            'posts_per_page' => -1,
+            'post_status'    => 'publish',
+            'fields'         => 'all',
         )
     );
-    foreach ( $posts as $post ){
+    
+    $documents = array_reduce( $query->posts, function( $carry, $post ) {
         $document = apply_filters( 'post_to_document', $post );
         if ( $document ) {
-            array_push( $documents, $document );
+            $carry[] = $document;
         }
+        return $carry;
+    }, [] );
+
+    if ( empty( $documents ) ) {
+        return;
     }
-    if ( $documents ) {
-        $update = $index->addDocuments( $documents );
-        if ( $sync ) {
-            $index->waitForTask( $update['taskUid'] );
+
+    try {
+        $update = $index->addDocuments($documents);
+        
+        if ($sync) {
+            $index->waitForTask($update['taskUid']);
         }
+    } catch (Exception $e) {
+        error_log('Meilisearch indexing error: ' . $e->getMessage());
     }
+
+    wp_reset_postdata();
 }
 
 function delete_index(){
