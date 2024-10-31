@@ -41,17 +41,24 @@ function index_all_posts( $sync = false ){
     }
 }
 
-function index_all_posts_of_type( $post_type, $sync = false ) {
+function index_all_posts_of_type( $post_type, $sync = false, $batch_size = -1, $current_page = 1 ) {
     $index = get_meilisearch_index();
 
-    $query = new WP_Query(
-        array(
-            'post_type'      => $post_type,
-            'posts_per_page' => -1,
-            'post_status'    => 'publish',
-            'fields'         => 'all',
-        )
+    $query_args = array(
+        'post_type'      => $post_type,
+        'post_status'    => 'publish',
+        'fields'         => 'all',
     );
+
+    // Use batch size if provided, otherwise fetch all posts.
+    if ( $batch_size > 0 ) {
+        $query_args['posts_per_page'] = $batch_size;
+        $query_args['paged']          = $current_page;
+    } else {
+        $query_args['posts_per_page'] = -1;
+    }
+
+    $query = new WP_Query( $query_args );
     
     $documents = array_reduce( $query->posts, function( $carry, $post ) {
         $document = apply_filters( 'post_to_document', $post );
