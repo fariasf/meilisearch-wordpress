@@ -23,7 +23,7 @@ function index_post_after_meta_update( $post, $request ) {
 
 function index_post( $post ){
     $index    = get_meilisearch_index();
-    $document = apply_filters( 'post_to_document', $post );
+    $document = apply_filters( 'post_to_document', array(), $post );
     if ( $document ) {
         $index->addDocuments($document);
     }
@@ -100,7 +100,7 @@ function count_indexed(){
     }
 }
 
-function post_to_document( $post ) {
+function post_to_document( $document, $post ) {
     if ( ! $post instanceof WP_Post ) {
         return false;
     }
@@ -123,4 +123,4 @@ function post_to_document( $post ) {
     ];
     return $document;
 }
-add_filter( 'post_to_document', 'post_to_document' );
+add_filter( 'post_to_document', 'post_to_document', 10, 2 );
