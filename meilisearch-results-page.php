@@ -33,6 +33,7 @@ function meilisearch_results_page_override_search_query( $query ) {
                 $ids = array_column( $results, 'id' );
                 $query->set( 'post__in', $ids );
                 $query->set( 'meilisearch_search', true );
+                $query->set( 'ep_integrate', false );
             }
         } catch ( Exception $e ) {
             error_log( $e->getMessage() );
