@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Meilisearch Wordpress
-Plugin URI: https://wordpress.meilisearch.dev
-description: The best search experience in wordpress with Meilisearch
-Version: 0.1.0
-Author: Meilisearch
-Author URI: https://meilisearch.com
-License: MIT
+Plugin Name: Meilisearch WordPress integration
+Plugin URI: https://facundofarias.com
+description: Integrate Meilisearch with WordPress
+Version: 0.2.0
+Author: Facundo Farias
+Author URI: https://facundofarias.com
+License: GPL-v2-or-later
 */
 
 require_once __DIR__ . '/vendor/autoload.php';
