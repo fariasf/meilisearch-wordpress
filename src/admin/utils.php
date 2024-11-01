@@ -61,7 +61,7 @@ function index_all_posts_of_type( $post_type, $sync = false, $batch_size = -1, $
 	$query = new WP_Query( $query_args );
 	
 	$documents = array_reduce( $query->posts, function( $carry, $post ) {
-		$document = apply_filters( 'post_to_document', $post );
+		$document = apply_filters( 'post_to_document', array(), $post );
 		if ( $document ) {
 			$carry[] = $document;
 		}
