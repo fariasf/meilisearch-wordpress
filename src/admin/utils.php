@@ -73,13 +73,13 @@ function index_all_posts_of_type( $post_type, $sync = false, $batch_size = -1, $
 	}
 
 	try {
-		$update = $index->addDocuments($documents);
+		$update = $index->addDocuments( $documents );
 		
 		if ($sync) {
 			$index->waitForTask($update['taskUid']);
 		}
-	} catch (Exception $e) {
-		error_log('Meilisearch indexing error: ' . $e->getMessage());
+	} catch ( Exception $e ) {
+		error_log( 'Meilisearch indexing error: ' . $e->getMessage() );
 	}
 
 	wp_reset_postdata();

@@ -1,8 +1,7 @@
-⚠️⚠️ This plugin is not under development. There is no roadmap for a WordPress plugin yet ⚠️⚠️
+# Meilisearch WordPress integration
 
-# ⚠️ meilisearch-wordpress ⚠️
+Meilisearch integration for WordPress
 
-Meilisearch plugin for WordPress
-
-- Custom plugin for Meilisearch integration in WordPress
-- Custom Widget to integrate a search bar to your WordPress site using [Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch)
+- Maintain a Meilisearch index of WordPress content
+- Bulk-index all content (via WP CLI, per post type, and in batches, for large sites)
+- Replace WordPress' search results with those provided by Meilisearch
